@@ -15,8 +15,6 @@ try {
         error
      })  
 }
-
-
 }
 exports.getAllCourse= async (req,res)=>{
 try {
