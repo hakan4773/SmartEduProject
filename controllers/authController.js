@@ -40,6 +40,7 @@ exports.logoutUser = (req, res) => {
 };
 
 exports.getDashboard = async (req, res) => {
+<<<<<<< HEAD
   try{
     const user = await User.findOne({ _id: req.session.userID }); 
     const categories=await Category.find()
@@ -51,6 +52,26 @@ exports.getDashboard = async (req, res) => {
       categories,
       courses
     })
+=======
+  try {
+<<<<<<< HEAD
+    const user = await User.findOne({ _id: req.session.userID });
+    res.status(200).render('dashboard', {
+      Page_Name: 'dashboard',
+      user,
+=======
+    const user = await User.findOne({ _id: req.session.userID }); 
+    const categories=await Category.find()
+    const courses=await Course.find({user:req.session.userID})
+
+    res.status(200).render('dashboard', {
+      Page_Name: 'dashboard',
+      user,
+      categories,
+      courses
+>>>>>>> parent of 6f5c1b0 (Revert "lesson 08")
+    });
+>>>>>>> 4cb4e4ff423ac3b043f22cff937fc334acfc4fd6
   } catch (error) {
     res.status(400).json({
       status: 'fail',
