@@ -56,10 +56,8 @@
 						<h3 class="widget-title">Categories</h3>
 				
 						<ul>
-							<% for (const ctg of categories) {
-						
-								%>
-							<li><a href="/courses?categories=<%= ctg.slug%>"><%= ctg.name%></a></li>
+							<% for (const ctg of categories) {	%>
+							<li><a href="/courses?categories= <%= ctg.slug %>"><%= ctg.name %></a></li>
 							<% } %> 
 						</ul>
 			         
