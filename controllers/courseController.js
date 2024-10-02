@@ -2,13 +2,6 @@ const Course=require("../models/Course")
 const Category=require("../models/Category")
 exports.createCourse= async (req,res)=>{
 try {
-<<<<<<< HEAD
-    const course =await Course.create({ name: req.body.name,
-        description: req.body.name,
-        category: req.body.category,
-        user: req.session.userID})
-    res.status(201).redirect("/courses")
-=======
     const course =await Course.create({
         name:req.body.name,
         description:req.body.description,
@@ -16,7 +9,6 @@ try {
         user:req.session.userID
     })
     res.status(201).redirect('/courses'); 
->>>>>>> 4cb4e4ff423ac3b043f22cff937fc334acfc4fd6
 } catch (error) {
     res.status(400).json({
         status: "fail",
@@ -52,14 +44,8 @@ res.status(200).render("courses",{
 
 exports.getCourse= async (req,res)=>{
     try {
-<<<<<<< HEAD
         const course=await Course.findOne({slug:req.params.slug}).populate("user")
         const categories=await Category.find();
-=======
-        const course=await Course.findOne({slug:req.params.slug}).populate('user')
-        const categories=await Category.find()
-
->>>>>>> 4cb4e4ff423ac3b043f22cff937fc334acfc4fd6
     res.status(200).render("course",{
         course,
         categories,
