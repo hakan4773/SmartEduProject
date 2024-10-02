@@ -10,7 +10,8 @@ name :{
 slug:{
     type:String,
     unique:true
-}
+},
+
 
 })
 

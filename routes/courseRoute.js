@@ -1,6 +1,5 @@
 const express=require("express")
 const courseController=require("../controllers/courseController")
-const middleWears=require("../Middlewares/roleMiddlewears");
 const roleMiddlewears = require("../Middlewares/roleMiddlewears");
 const router=express.Router();
 
