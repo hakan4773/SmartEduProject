@@ -9,8 +9,6 @@ exports.createCourse = async (req, res) => {
       category: req.body.category,
       user: req.session.userID,
     });
-    console.log('Session UserID:', req.session.userID);
-
 
     res.status(201).redirect('/courses');
   } catch (error) {
@@ -29,10 +27,22 @@ exports.getAllCourse = async (req, res) => {
     let filter = {};
     if (categoryslug) {
       filter = { category: category._id };
-      console.log(filter)
+    }
+       const query=req.query.search
+    if(query){
+      filter={name:query}
     }
 
-    const courses = await Course.find(filter).sort('-createdAt');
+    if(!query && !categoryslug){
+      filter.name="",
+      filter.category=null
+    }
+
+    const courses = await Course.find({$or:[
+      {name:{$regex:".*" + filter.name +".*", $options:"i"}},
+      {category:filter.category}
+    ]}).sort('-createdAt').populate("user");
+
     const categories = await Category.find();
     res.status(200).render('courses', {
       courses,
