@@ -41,9 +41,6 @@
 								<blockquote class="default">
 								<%= course.description %>
 								</blockquote>
-
-								
-						
 						</div>
 					</div>
 					
@@ -52,29 +49,32 @@
 							<h3 class="author_name"><a href="#"><%= course.user.name %></a></h3>
 						</div>
 					</div>
+			</div> 
 					
                 </div>
 				<!-- end col -->
-				<!-- <div class="col-lg-3 col-12 right-single">
+				 <div class="col-lg-3 col-12 right-single">
 					<div class="widget-search">
 						<div class="site-search-area">
-							<form method="get" id="site-searchform" action="#">
+							<form method="GET" id="site-searchform" action="/courses">
 								<div>
-									<input class="input-text form-control" name="search-k" id="search-k" placeholder="Search keywords..." type="text">
-									<input id="searchsubmit" value="Search" type="submit">
+									<input class="input-text form-control" name="search" id="search-k" placeholder="Search..." type="text">
+									<button id="searchsubmit" value="Search" type="submit"></button>
 								</div>
 							</form>
 						</div>
 					</div>
-				
 					<div class="widget-categories">
-						<h3 class="widget-title">Categories</h3>
+						<h3 class="widget-title">Categories</h3>				
 						<ul>
-							<li><a href="/courses">Programming</a></li>
+							<% for (const ctg of categories) {	%>
+							<li><a href="/courses?categories=<%= ctg.slug %>"><%= ctg.name %></a></li>
+							<% } %> 
 						</ul>
+			         
 					</div>
 					
-				</div> -->
+				</div> 
 
             </div><!-- end row -->
         </div><!-- end container -->
