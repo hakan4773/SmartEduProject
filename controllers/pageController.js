@@ -31,6 +31,8 @@ exports.getİndexPge=(req, res) => {
   }
 
   exports.sendEmail= async (req,res)=>{
+
+    try {
 const outputMessage=`
 <h1>Mail Details </h1>
 <ul>
@@ -42,7 +44,7 @@ const outputMessage=`
 </ul>
 `
 
-try {
+
   
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -66,13 +68,16 @@ const transporter = nodemailer.createTransport({
   console.log("Message sent: %s", info.messageId);
   // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
 
+req.flash("success","we Received your message succesfully");
+ 
 
 res.status(200).redirect("contact")
-console.log("Message sent successfully");
 
 } catch (error) {
-  console.error("Error sending email:", error.message); // Hata mesajını yazdırın
-  res.status(500).send("Failed to send email");
+//  req.flash("error",`Error sending email: ${error}`);
+req.flash("error","Error sending email");
+
+ res.status(200).redirect("contact")
 
 
 }
