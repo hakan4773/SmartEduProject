@@ -102,3 +102,35 @@ try {
   })
 }
 }
+exports.deleteCourse=async (req,res)=>{
+  try {
+ const course=await Course.findOneAndDelete({slug:req.params.slug})
+ await User.updateMany(
+  { courses: course._id }, 
+  { $pull: { courses: course._id } } 
+);
+ req.flash("error",`${course.name} has been removed succesfully`);
+ res.status(200).redirect('/users/dashboard')
+  
+
+  } catch (error) {
+    res.status(400).json({status:"fail",
+      error
+    })
+  }
+  }
+  exports.updateCourse=async (req,res)=>{
+try {
+  const course = await Course.findOneAndUpdate({slug:req.params.slug},req.body)
+  course.save();
+  req.flash("success",`${course.name} has been updated succesfully`);
+  res.status(200).redirect('/users/dashboard')
+
+  
+} catch (error) {
+  req.flash("error","something happened");
+
+  res.status(400).redirect("/users/dashboard")
+}
+  
+  }
