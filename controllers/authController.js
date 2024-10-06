@@ -60,12 +60,14 @@ exports.getDashboard = async (req, res) => {
     const user = await User.findOne({ _id: req.session.userID }).populate("courses"); 
     const categories=await Category.find()
     const courses=await Course.find({user:req.session.userID}).sort("-createdAt")
+    const users=await User.find()
     console.log(user.courses);
     res.status(200).render('dashboard', {
       Page_Name: 'dashboard',
       user,
       categories,
-      courses
+      courses,
+      users
     });
   } catch (error) {
     res.status(400).json({
@@ -73,4 +75,29 @@ exports.getDashboard = async (req, res) => {
       error,
     })
 }
+}
+exports.deleteUser = async(req,res)=> {
+try {
+
+  await User.findByIdAndDelete(req.params.id)
+  const courses=await Course.find({user:req.params.id})
+  const courseid=courses.map((course)=>course._id)
+  await Course.deleteMany({user:req.params.id})
+
+  await User.updateMany(
+    { courses: { $in: courseid } }, // Bu kursları almış öğrencileri bul
+    { $pull: { courses: { $in: courseid } } } // `courses` listesinden silinen kursları çıkar
+  );
+  res.status(200).redirect('/users/dashboard');
+
+} catch (error) {
+  res.status(400).json({
+    status: 'fail',
+    error,
+  })
+}
+
+
+
+
 }

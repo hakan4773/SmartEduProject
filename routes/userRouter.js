@@ -7,7 +7,6 @@ const router=express.Router();
 
 router.route("/signup").post([
     body("name").notEmpty().withMessage("Please enter Your Name"),
-
     body("email").isEmail().withMessage("Please your Enter Valid Email")
 .custom(async userEmail=>{
    const user= await User.findOne({email:userEmail})
@@ -26,5 +25,6 @@ body("password")
 router.route("/login").post(authController.LoginUser)
 router.route("/logout").get(authController.logoutUser)
 router.route("/dashboard").get(authMiddlewares,authController.getDashboard)
+router.route("/:id").delete(authController.deleteUser)
 
 module.exports=router;
